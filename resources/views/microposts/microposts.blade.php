@@ -11,6 +11,15 @@
                 </div>
                 <div>
                     @if (Auth::id() == $micropost->user_id)
+                        @if (Auth::user()->is_favorite($micropost->id))
+                            {!! Form::open(['route' => ['favorites.unfavorite', $micropost->id], 'method' => 'delete']) !!}
+                                {!! Form::submit('UnFavorite', ['class' => 'btn btn-danger btn-sm']) !!}
+                            {!! Form::close() !!}
+                        @else
+                            {!! Form::open(['route' => ['favorites.favorite', $micropost->id]]) !!}
+                                {!! Form::submit('Favorite', ['class' => 'btn btn-info btn-sm']) !!}
+                            {!! Form::close() !!}
+                        @endif
                         {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
                         {!! Form::close() !!}
